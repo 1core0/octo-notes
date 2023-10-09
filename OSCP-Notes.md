@@ -210,6 +210,8 @@ rpcclient //domain.tld -U domain.local/USERNAME%754d87d42adabcca32bdb34a876cbffb
 /usr/share/doc/python3-impacket/examples/samrdump.py -port 139 [[domain/]username[:password]@]IP
 # CME - User Enumeration
 crackmapexec smb IP --users [-u <username> -p <password>]
+# CME - Share Enumeration
+crackmapexec smb IP --shares [-u <username> -p <password>]
 # CME - Group Enumeration
 crackmapexec smb IP --groups [-u <username> -p <password>]
 # CME - Logged On User
@@ -279,11 +281,17 @@ SELECT routine_name FROM information_schema.routines WHERE routine_type = 'FUNCT
 
 
 
-## PE Enumeration
+## AD Enumeration
 
 ### Active Directory Domain
 
 ```bash
+# Query the AD and collect all objects using .EXE
+.\SharpHound.exe -CollectionMethod all 
+# Query the AD and collect all objects using .PS1
+powershell -ep bypass
+. .\SharpHound.ps1
+Invoke-BloodHound -CollectionMethod All
 # Get AD Users
 python3 GetADUsers.py -all domain.tld/john:password123 -dc-ip 10.10.10.1
 # Kerberos Enum User
